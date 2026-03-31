@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import defaultPlaceholder from '../../assets/images/placeholder.webp';
+
+interface Props {
+  src?: any;
+  alt?: string;
+  class?: string;
+  width?: number;
+  height?: number;
+  [key: string]: any;
+}
+
+const props = Astro.props;
+const altText = props.alt || "Imagen de IESL Institute";
+
+const extraProps = { ...props };
+delete extraProps.src;
+delete extraProps.alt;
+
+// Caso 1: ESM import (objeto con .src, .width, .height)
+// Caso 2: URL remota (https://...)
+// Caso 3: Ruta pública (/images/...)
+// Caso 4: Sin src -> <Image> con placeholder importado
+const isEsmImport = props.src && typeof props.src === 'object';
+const isRemoteUrl = typeof props.src === 'string' && props.src.startsWith('http');
+const isPublicPath = typeof props.src === 'string' && props.src.startsWith('/');
+
+// JS para el cliente: si la imagen falla al cargar, la reemplaza por el placeholder
+const fallbackSrc = defaultPlaceholder.src;
+const handleErrorScript = `this.onerror=null;this.src='${fallbackSrc}';`;
+---
+
+{isEsmImport && (
+  <Image src={props.src} alt={altText} onerror={handleErrorScript} {...extraProps} />
+)}
+{isRemoteUrl && (
+  <Image src={props.src} alt={altText} inferSize onerror={handleErrorScript} {...extraProps} />
+)}
+{isPublicPath && (
+  <img src={props.src} alt={altText} onerror={handleErrorScript} {...extraProps} />
+)}
+{!props.src && (
+  <Image src={defaultPlaceholder} alt={altText} {...extraProps} />
+)}

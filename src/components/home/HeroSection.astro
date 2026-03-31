@@ -1,0 +1,131 @@
+---
+import Section from "../ui/Section.astro";
+import Button from "../ui/Button.astro";
+import FloatingBadge from "../ui/FloatingBadge.astro";
+import { hero } from "../../data/inicio.data";
+import { Icon } from "astro-icon/components";
+import Glow from "../ui/Glow.astro";
+import SmartImage from "../ui/SmartImage.astro";
+
+const positionClasses = {
+  "top-right": "-top-6 right-4 lg:top-6 lg:-right-10",
+  "bottom-left": "-bottom-6 left-4 lg:bottom-6 lg:-left-12",
+  "top-left": "-top-6 left-4 lg:top-6 lg:-left-10",
+  "bottom-right": "-bottom-6 right-4 lg:bottom-6 lg:-right-12",
+};
+---
+
+<Section class="relative overflow-x-clip">
+  <Glow
+    position="top-0 left-0"
+    size="w-[800px] h-[200px]"
+    class="-translate-y-1/4"
+  />
+  <Glow
+    position="top-0 right-0"
+    size="w-[800px] h-[500px]"
+    class="translate-x-1/4 -translate-y-1/4"
+  />
+  <Glow
+    color="secondary"
+    position="bottom-0 left-0"
+    size="w-[1000px] h-[500px]"
+    class="translate-y-3/4 -translate-x-1/4"
+  />
+  <div class="grid lg:grid-cols-2 gap-12 items-center">
+    <div class="max-w-xl">
+      <div
+        class="inline-flex items-center gap-2 px-5 py-1.5 text-sm rounded-full mb-6 border border-primary"
+      >
+        <Icon name="mdi:heart" class="text-secondary text-xl" />
+        {hero.badge}
+      </div>
+      <h1 class="leading-[1.1] font-bold text-gray-900 mb-6 tracking-tight">
+        {hero.title.static}
+        <br />
+        <span class="text-primary">{hero.title.highlight}</span>
+        {hero.title.end}
+      </h1>
+      <p class="text-gray-600 mb-10 leading-relaxed font-medium">
+        {hero.description}
+      </p>
+      <div class="flex flex-wrap gap-4 items-center">
+        <Button
+          href={hero.cta.primary.href}
+          icon="fluent:arrow-right-16-filled" 
+        >
+          {hero.cta.primary.text}
+        </Button>
+        <Button
+          href={hero.cta.secondary.href}
+          icon="streamline-plump:multiple-stars"
+          variant="secondary"
+          iconColor="text-yellow-400"
+          class="flex-row-reverse text-black!"
+        >
+          {hero.cta.secondary.text}
+        </Button>
+      </div>
+    </div>
+    <div class="relative lg:ml-auto w-full max-w-lg mt-10 lg:mt-0 m-auto" id="hero-slider">
+      {hero.slides.map((slide, index) => (
+        <div class={`hero-slide transition-opacity duration-1000 ease-in-out ${index === 0 ? 'relative opacity-100 z-10' : 'absolute inset-0 opacity-0 z-0 pointer-events-none'}`}>
+          <div class="aspect-4/3 bg-gray-200 rounded-4xl overflow-hidden shadow-2xl flex items-center justify-center text-gray-400">
+            <SmartImage src={slide.image} alt={`Estudiante IESL ${index + 1}`} loading="eager" class="w-full h-full object-cover" />
+          </div>
+
+          <FloatingBadge
+            icon={slide.floatingBadges[0].icon}
+            title={slide.floatingBadges[0].title}
+            description={slide.floatingBadges[0].description}
+            color={slide.floatingBadges[0].color}
+            class={index % 2 === 0 ? positionClasses["top-right"] : positionClasses["top-left"]}
+          />
+
+          <FloatingBadge
+            icon={slide.floatingBadges[1].icon}
+            title={slide.floatingBadges[1].title}
+            description={slide.floatingBadges[1].description}
+            color={slide.floatingBadges[1].color}
+            class={index % 2 === 0 ? positionClasses["bottom-left"] : positionClasses["bottom-right"]}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</Section>
+
+<script>
+  function initHeroSlider() {
+    const slider = document.getElementById('hero-slider');
+    if (!slider) return;
+    
+    // Limpiar intervalo anterior para transiciones de vista seguras
+    if ((window as any).heroSliderInterval) {
+      clearInterval((window as any).heroSliderInterval);
+    }
+    
+    const slides = slider.querySelectorAll('.hero-slide');
+    if (slides.length <= 1) return;
+    
+    let currentIndex = 0;
+    
+    (window as any).heroSliderInterval = setInterval(() => {
+      // Ocultar slide actual
+      const currentSlide = slides[currentIndex] as HTMLElement;
+      currentSlide.classList.remove('opacity-100', 'z-10');
+      currentSlide.classList.add('opacity-0', 'z-0', 'pointer-events-none');
+      
+      // Siguiente slide
+      currentIndex = (currentIndex + 1) % slides.length;
+      
+      // Mostrar siguiente slide
+      const nextSlide = slides[currentIndex] as HTMLElement;
+      nextSlide.classList.remove('opacity-0', 'z-0', 'pointer-events-none');
+      nextSlide.classList.add('opacity-100', 'z-10');
+    }, 3500); 
+  }
+
+  document.addEventListener('astro:page-load', initHeroSlider);
+  initHeroSlider();
+</script>

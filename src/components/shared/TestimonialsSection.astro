@@ -1,0 +1,49 @@
+---
+import Section from "../ui/Section.astro";
+import TestimonialCard from "../ui/TestimonialCard.astro";
+import InfoBadge from "../ui/InfoBadge.astro";
+
+// We assume TestimonialCard is defined in shared.ts types based on CourseTestimonials
+import type { TestimonialCard as TestimonialCardType } from "../../types/shared.type";
+
+interface Props {
+  title?: string;
+  badge?: string;
+  testimonials?: TestimonialCardType[];
+  class?: string;
+}
+
+const { 
+  title = "Lo que dicen nuestros estudiantes", 
+  badge, 
+  testimonials,
+  class: className = "bg-gray-50/50"
+} = Astro.props;
+---
+
+<Section class={className}>
+  {(title || badge) && (
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {badge && <InfoBadge text={badge} />}
+      {title && (
+        <h2 class="font-bold text-gray-900 tracking-tight text-3xl md:text-4xl mt-3">
+          {title}
+        </h2>
+      )}
+    </div>
+  )}
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+    {
+      testimonials && testimonials.length > 0 && testimonials.map((testimonial) => (
+        <TestimonialCard
+          quote={testimonial.quote}
+          name={testimonial.name}
+          role={testimonial.role}
+          highlight={testimonial.highlight}
+          avatar={testimonial.avatar}
+        />
+      ))
+    }
+  </div>
+</Section>

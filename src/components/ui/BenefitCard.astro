@@ -1,0 +1,21 @@
+---
+import type { Color } from "../../types/icons";
+import IconBubble from "./IconBubble.astro";
+
+interface Props {
+  icon: string;
+  title: string;
+  description: string;
+  color: Color;
+}
+
+const { icon, title, description, color } = Astro.props;
+---
+
+<div class="card-base transition-global">
+  <IconBubble icon={icon} color={color} class="mb-3" />
+  <h4 class="font-bold text-gray-900 mb-3 leading-tight">
+    {title}
+  </h4>
+  <p class="text-gray-600 leading-relaxed">{description}</p>
+</div>

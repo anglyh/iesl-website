@@ -1,0 +1,65 @@
+---
+import { Icon } from 'astro-icon/components';
+import SmartImage from './SmartImage.astro';
+
+type Details = {
+  totalHours: string;
+  totalLessons: string;
+  level: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  tag: string;
+  details: Details;
+  rating: string;
+  href: string;
+  image?: string;
+}
+
+const { title, description, tag, details, rating, href, image } = Astro.props;
+---
+
+<a href={href} class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col transition-global h-full group cursor-pointer hover:shadow-lg">
+  
+  <div class="w-full bg-gray-200 aspect-video relative overflow-hidden">
+    <div class="absolute top-4 left-4 bg-white py-1.5 px-3 rounded-full text-primary/80 font-bold text-sm z-10">{tag}</div>
+    <SmartImage
+      src={image}
+      alt={title}
+      class="w-full h-full object-cover group-hover:scale-110 transition-global"
+    />
+  </div>
+
+  <div class="p-6 flex flex-col flex-1">
+    <div class="flex flex-wrap gap-2 md:gap-3 mb-4 text-xs text-gray-500 font-inter">
+      {Object.entries(details).map(([key, value]) => (
+        <span class="flex items-center gap-1">
+          {key === "totalHours" && <Icon name="mdi:clock-outline" class="text-gray-400 text-xl" />}
+          {key === "totalLessons" && <Icon name="tabler:book" class="text-gray-400 text-xl" />}
+          {key === "level" && <Icon name="material-symbols:signal-cellular-alt-rounded" class="text-gray-400 text-xl" />}
+          {value}
+        </span>
+      ))}
+    </div>
+    
+    <div class="flex flex-col grow">
+      <h3 class="font-poppins font-bold text-lg leading-tight mb-4 text-gray-900 group-hover:text-primary transition-global">{title}</h3>
+      <p class="text-sm text-gray-600 mb-6 flex-1 font-inter">{description}</p>
+    </div>
+    
+    <div class="flex justify-between items-center text-sm gap-2 font-inter">
+      <div class="flex items-center text-yellow-400 gap-1">
+        <Icon name="material-symbols:star" class="text-yellow-400 text-xl" />
+        <span class="font-bold text-gray-900">{rating}</span>
+      </div>
+
+      <span class="text-primary font-bold text-sm group-hover:text-primary/80 transition-global flex items-center mt-auto font-poppins gap-2 group-hover:gap-3">
+        Ver programa
+        <Icon name="fluent:arrow-right-16-filled" class="text-primary text-xl" />
+      </span>
+    </div>
+  </div>
+</a>
+

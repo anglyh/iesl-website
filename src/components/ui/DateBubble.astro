@@ -1,0 +1,16 @@
+---
+interface Props {
+  date: string;
+}
+
+const { date } = Astro.props;
+
+const parsed = new Date(date);
+const month = parsed.toLocaleDateString('es-AR', { month: 'short' }).toUpperCase();
+const day = parsed.toLocaleDateString('es-AR', { day: '2-digit' });
+---
+
+<div class="flex flex-col items-center justify-center rounded-2xl border-2 border-primary/30 bg-primary/10 h-12 w-12 gap-0.5 shrink-0">
+  <span class="text-[10px] font-extrabold text-primary uppercase tracking-widest">{month}</span>
+  <span class="text-base font-extrabold text-primary leading-none">{day}</span>
+</div>

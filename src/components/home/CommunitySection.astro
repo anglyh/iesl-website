@@ -1,0 +1,65 @@
+---
+import Section from "../ui/Section.astro";
+import { Icon } from "astro-icon/components";
+import FloatingBadge from "../ui/FloatingBadge.astro";
+import InfoBadge from "../ui/InfoBadge.astro";
+import Button from "../ui/Button.astro";
+import { community } from "../../data/inicio.data";
+import ImageWithBadge from "../ui/ImageWithBadge.astro";
+---
+
+<Section>
+  <div class="grid lg:grid-cols-2 gap-16 items-center">
+    <div
+      class="flex justify-center min-h-130 items-center relative w-full h-full mx-auto px-4 z-10"
+    >
+      <ImageWithBadge
+        image={community.floatingBadges[0].image || ""}
+        badgeTitle={community.floatingBadges[0].title}
+        badgeDescription={community.floatingBadges[0].description}
+        badgeIcon={community.floatingBadges[0].icon}
+        badgeColor={community.floatingBadges[0].color}
+        class="absolute left-1/2 top-0 -ml-[7.2rem] sm:-ml-[5rem] lg:max-xl:-ml-[4.375rem] w-64 sm:w-80 lg:max-xl:w-70 h-72 sm:h-84 z-10"
+        badgePosition="top-left"
+      />
+
+      <ImageWithBadge
+        image={community.floatingBadges[1].image || ""}
+        badgeTitle={community.floatingBadges[1].title}
+        badgeDescription={community.floatingBadges[1].description}
+        badgeIcon={community.floatingBadges[1].icon}
+        badgeColor={community.floatingBadges[1].color}
+        class="absolute right-1/2 -bottom-10 sm:bottom-0 -mr-[7.2rem] sm:-mr-[5rem] lg:max-xl:-mr-[4.375rem] w-64 sm:w-80 lg:max-xl:w-70 h-72 sm:h-84"
+        badgePosition="top-right"
+      />
+    </div>
+
+    <div>
+      <InfoBadge text={community.badge} />
+
+      <h2 class="font-bold text-gray-900 mb-6 tracking-tight leading-tight">
+        {community.title.static} <br /><span class="text-primary"
+          >{community.title.highlight}</span
+        >
+      </h2>
+      <p class="text-gray-600 mb-10 leading-relaxed font-medium">
+        {community.description}
+      </p>
+      <ul class="space-y-6 text-gray-800 font-medium mb-12">
+        {
+          community.items.map((item) => (
+            <li class="flex items-center gap-4">
+              <div class="p-2 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0">
+                <Icon name={item.icon} size={24} />
+              </div>
+              <span>{item.text}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <Button href={community.cta.href} icon="fluent:arrow-right-16-filled" variant="secondary">
+        {community.cta.text}
+      </Button>
+    </div>
+  </div>
+</Section>

@@ -1,0 +1,92 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import { courses } from "../../data/courses.data";
+import type { Course } from "../../types/course.type";
+
+import CourseHeader from "../../components/cursos/details/CourseHeader.astro";
+import CourseSidebar from "../../components/cursos/details/CourseSidebar.astro";
+import CourseContentBody from "../../components/cursos/details/CourseContentBody.astro";
+import TestimonialsSection from "../../components/shared/TestimonialsSection.astro";
+import CertificationsSection from "../../components/shared/CertificationsSection.astro";
+import ContactSection from "../../components/cursos/ContactSection.astro";
+import SmartImage from "../../components/ui/SmartImage.astro";
+
+export async function getStaticPaths() {
+  return courses.map((course) => ({
+    params: { slug: course.slug },
+    props: { course },
+  }));
+}
+
+interface Props {
+  course: Course;
+}
+
+const { course } = Astro.props;
+---
+
+<Layout title={course.title} description={course.description}>
+  <!-- Main content del curso -->
+  <Section class="py-12 md:py-16">
+    <!-- Grid Layout 2 Columnas -->
+    <div class="grid lg:grid-cols-[1fr_380px] gap-12 lg:gap-16">
+      
+      <!-- Columna Principal Izquierda -->
+      <div>
+        <CourseHeader course={course} />
+        
+        <div class="mt-14">
+          <CourseContentBody course={course} />
+        </div>
+      </div>
+
+      <!-- Columna Derecha (espacio en el que el sticky se moverá) -->
+      <aside>
+        <div class="sticky top-32">
+          <CourseSidebar course={course} />
+        </div>
+      </aside>
+
+    </div>
+  </Section>
+
+  <!-- Certificados - Empieza una vez que la columna derecha y el sticky terminaron -->
+  <Section class="py-10">
+    <div class="max-w-3xl">
+      <h2 class="font-bold text-gray-900 text-3xl tracking-tight mb-8">
+        Certificado de finalización
+      </h2>
+      <div class="w-full bg-gray-50 rounded-3xl p-4 border border-gray-100 flex items-center justify-center relative overflow-hidden group">
+        <!-- Placeholder de la imagen del certificado -->
+        <SmartImage
+          src="/images/placeholder.webp"
+          alt="Certificado de IESL Institute"
+          class="w-full h-auto object-cover rounded-2xl shadow-sm group-hover:scale-[1.02] transition-global"
+          loading="lazy"
+        />
+        <!-- Etiqueta decorativa sobrepuesta -->
+        <!-- <div class="absolute bottom-6 right-6 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-xl border border-gray-100 shadow-sm flex items-center gap-2">
+           <Icon name="material-symbols:verified-rounded" class="text-primary text-2xl" />
+           <span class="font-bold text-gray-800 text-sm font-poppins">Validez Oficial</span>
+        </div> -->
+      </div>
+    </div>
+  </Section>
+
+  <!-- Comunidad / Testimonios -->
+  <TestimonialsSection 
+    title="Unite a nuestra comunidad" 
+    badge="+2000 graduados" 
+    testimonials={course.testimonials} 
+    class="py-10" 
+  />
+
+  <!-- Niveles de Certificación -->
+  <div class="bg-gray-50/50">
+    <CertificationsSection />
+  </div>
+
+  <!-- Formulario de contacto -->
+  <ContactSection />
+</Layout>

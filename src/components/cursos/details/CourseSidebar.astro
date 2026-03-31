@@ -1,0 +1,87 @@
+---
+import type { Course } from "../../../types/course.type";
+import Button from "../../ui/Button.astro";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  course: Course;
+}
+
+const { course } = Astro.props;
+---
+
+<div class="bg-white rounded-4xl p-6 border-2 border-primary/20 relative">
+  <!-- Badge superior (absoluto) -->
+  {course.priceBadge && (
+    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white font-bold px-6 py-1.5 rounded-full text-sm font-inter tracking-wide whitespace-nowrap shadow-md shadow-orange-500/20">
+      {course.priceBadge.toUpperCase()}
+    </div>
+  )}
+
+  <h3 class="font-poppins font-bold text-gray-900 text-2xl mb-6 leading-tight mt-2 pb-2">
+    Comienza tu futuro hoy
+  </h3>
+
+  <!-- CTAs -->
+  <div class="flex flex-col gap-4 mb-8">
+    <Button href="#" class="w-full justify-center">
+      Inscribirme al curso
+    </Button>
+    <Button 
+      href="#"
+      variant="secondary" 
+      class="w-full justify-center" 
+    >
+      Quiero recibir información
+    </Button>
+  </div>
+
+  <!-- Beneficios incluidos (Naranja claro) -->
+  {course.benefits && (
+    <div class="bg-[#FFF8F0] rounded-2xl p-4 mb-6 group">
+      <h4 class="font-bold text-gray-900 text-base mb-2 font-inter">Beneficios incluídos</h4>
+      <p class="text-gray-700 font-inter text-sm mb-4">Al comprar este curso accedes a:</p>
+      <ul class="space-y-3 font-inter text-sm text-gray-700">
+        {course.benefits.map(benefit => (
+          <li class="flex items-center gap-3">
+            <Icon name="ph:gift" class="text-primary text-xl shrink-0" />
+            <span>{benefit}</span>
+          </li>
+        ))}
+      </ul>
+      <a href="/beneficios" class="inline-flex mt-6 font-bold text-primary hover:text-primary/70 transition-global items-center gap-1.5 font-inter text-sm group-hover:translate-x-1">
+        Ver todos los beneficios
+        <Icon name="fluent:arrow-right-16-filled" class="text-lg" />
+      </a>
+    </div>
+  )}
+
+  <hr class="border-gray-100 my-4" />
+
+  <!-- Este curso incluye (ahora con iconos definidos) -->
+  {course.includes && (
+    <div>
+      <h4 class="font-bold text-gray-900 mb-2 font-inter text-lg">Este curso incluye:</h4>
+      <ul class="space-y-4 font-inter text-[15px] text-gray-700">
+        {course.includes.map(item => (
+          <li class="flex items-center gap-3">
+            <Icon name={item.icon} class="text-primary text-[22px] shrink-0 opacity-80" />
+            <span>{item.label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+
+  <hr class="border-gray-100 my-6" />
+
+  <!-- Compartir y Guardar -->
+  <div class="flex items-center gap-4">
+    <button class="w-12 h-12 rounded-2xl border border-gray-200 flex items-center justify-center text-gray-700 hover:text-primary hover:border-primary transition-global bg-white hover:bg-gray-50 cursor-pointer">
+      <Icon name="tabler:share" class="text-xl" />
+    </button>
+    <button class="w-12 h-12 rounded-2xl border border-gray-200 flex items-center justify-center text-gray-700 hover:text-primary hover:border-primary transition-global bg-white hover:bg-gray-50 cursor-pointer">
+      <Icon name="tabler:heart" class="text-xl" />
+    </button>
+  </div>
+</div>

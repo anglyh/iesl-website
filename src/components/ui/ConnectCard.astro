@@ -1,0 +1,18 @@
+---
+import SmartImage from './SmartImage.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  img: ImageMetadata;
+}
+
+
+const { title, description, img } = Astro.props;
+---
+
+<div class="p-6 lg:p-8 transition-global flex flex-col card-base">
+  <h3 class="font-bold text-gray-900 mb-3">{title}</h3>
+  <p class="text-gray-600 leading-relaxed mb-6">{description}</p>
+  <SmartImage src={img} alt={title} class="w-full h-full aspect-video object-contain -mb-6 lg:-mb-8" />
+</div>

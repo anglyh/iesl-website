@@ -1,0 +1,18 @@
+---
+import HeroSection from "../components/beneficios/HeroSection.astro";
+import Layout from "../layouts/Layout.astro";
+import BenefitsSection from "../components/beneficios/BenefitsSection.astro";
+import { wellnessBenefits, discountBenefits, balanceBenefits } from "../data/beneficios.data";
+import CTASection from "../components/beneficios/CTASection.astro";
+---
+
+<Layout 
+  title="Beneficios" 
+  description="Conoce los beneficios incluidos con tu curso en IESL Institute. Clases de yoga, mindfulness, talleres de inteligencia emocional y más para cuidar tu bienestar."
+>
+  <HeroSection />
+  <BenefitsSection data={wellnessBenefits} iconColor="orange" />
+  <BenefitsSection data={discountBenefits} iconColor="primary" />
+  <BenefitsSection data={balanceBenefits} iconColor="purple" />
+  <CTASection />
+</Layout>

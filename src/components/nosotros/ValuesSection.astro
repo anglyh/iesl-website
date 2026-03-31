@@ -1,0 +1,18 @@
+---
+import Section from "../ui/Section.astro";
+import BenefitCard from "../ui/BenefitCard.astro";
+import { values } from "../../data/nosotros.data";
+---
+
+<Section id="valores">
+  <div class="grid md:grid-cols-3 gap-8">
+    {values.cards.map((card) => (
+      <BenefitCard
+        icon={card.icon}
+        title={card.title}
+        description={card.description}
+        color={card.color}
+      />
+    ))}
+  </div>
+</Section>

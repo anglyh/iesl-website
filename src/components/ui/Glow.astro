@@ -1,0 +1,37 @@
+---
+/**
+ * Reusable background glow/blur effect component.
+ * Used for decorative blobs, spotlights, and ambient lighting.
+ */
+interface Props {
+  color?: "primary" | "secondary" | string;
+  size?: string;
+  position?: string;
+  blur?: string;
+  opacity?: string;
+  class?: string;
+}
+
+const { 
+  color = "primary", 
+  size = "w-[800px] h-[500px]", 
+  position = "top-0 right-0",
+  blur = "blur-[100px]",
+  class: className = ""
+} = Astro.props;
+
+// Map named colors to their theme background variants
+const colorClass = color === "primary" ? "bg-primary/20" : color === "secondary" ? "bg-secondary/20" : color;
+---
+
+<div
+  class:list={[
+    "absolute rounded-full -z-10",
+    size,
+    position,
+    blur,
+    colorClass,
+    className
+  ]}
+>
+</div>

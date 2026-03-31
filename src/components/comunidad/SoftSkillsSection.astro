@@ -1,0 +1,40 @@
+---
+import Section from "../ui/Section.astro";
+import InfoBadge from "../ui/InfoBadge.astro";
+import SoftSkillCard from "../ui/SoftSkillCard.astro";
+import Glow from "../ui/Glow.astro";
+import { softSkills } from "../../data/comunidad.data";
+---
+
+<Section class="bg-gray-50/50 relative overflow-hidden">
+  <Glow
+    position="top-0 right-0"
+    color="bg-teal-50/50"
+    size="w-[400px] h-[400px]"
+    blur="blur-[80px]"
+    class="-translate-y-1/2 translate-x-1/2"
+  />
+
+  <div class="text-center max-w-2xl mx-auto mb-16">
+    <InfoBadge text={softSkills.badge} />
+    <h2 class="font-bold text-gray-900 mb-4 tracking-tight leading-tight">
+      {softSkills.title.static} <br>
+      <span class="text-primary">{softSkills.title.highlight}</span>
+    </h2>
+    <p class="text-gray-600 font-medium">
+      {softSkills.description}
+    </p>
+  </div>
+
+  <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+    {softSkills.cards.map((card) => (
+      <SoftSkillCard
+        icon={card.icon}
+        tag={card.tag}
+        title={card.title}
+        description={card.description}
+        skills={card.skills}
+      />
+    ))}
+  </div>
+</Section>

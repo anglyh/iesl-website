@@ -1,0 +1,44 @@
+---
+import type { Resource } from "../../../types/recursos.type";
+import { Icon } from "astro-icon/components";
+import Button from "../../ui/Button.astro";
+
+interface Props {
+  resource: Resource;
+}
+const { resource } = Astro.props;
+---
+<div class="flex flex-col gap-6">
+  <!-- Caja de recurso incluido -->
+  {resource.includedResource && (
+    <div class="bg-white rounded-4xl p-6 border-2 border-primary/20">
+      <div class="flex items-center gap-3 mb-5">
+        <h3 class="font-bold text-gray-900 text-lg font-poppins">Recursos incluidos</h3>
+      </div>
+
+      <Button 
+        href={resource.includedResource.url || "#"} 
+        class="w-full justify-center px-4 flex-row-reverse"
+        icon="material-symbols:download-rounded"
+        variant="secondary"
+      >
+        Descargar recurso
+      </Button>
+
+      <hr class="border-gray-200 my-6" />
+
+      <!-- Compartir -->
+      <div class="flex items-center justify-between">
+        <span class="text-gray-500 font-inter text-sm font-medium">Compartir artículo</span>
+        <div class="flex items-center gap-2">
+          <button class="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-600 hover:text-primary hover:border-primary transition-global bg-white cursor-pointer hover:shadow-sm">
+            <Icon name="tabler:share" class="text-lg" />
+          </button>
+          <button class="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-600 hover:text-secondary hover:border-secondary transition-global bg-white cursor-pointer hover:shadow-sm">
+            <Icon name="tabler:heart" class="text-lg" />
+          </button>
+        </div>
+      </div>
+    </div>
+  )}
+</div>

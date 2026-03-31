@@ -1,0 +1,36 @@
+---
+import type { Resource } from "../../../types/recursos.type";
+import SmartImage from "../../ui/SmartImage.astro";
+
+interface Props {
+  resource: Resource;
+}
+const { resource } = Astro.props;
+---
+<div class="flex flex-col">
+  <!-- Encabezado del artículo -->
+  <div class="mb-8">
+    <span class="inline-block border border-gray-200 text-gray-500 text-xs font-inter px-3 py-1 rounded-full mb-5 bg-gray-50">
+      {resource.category}
+    </span>
+    <h1 class="font-bold text-gray-900 leading-tight tracking-tight mb-6">
+      {resource.title}
+    </h1>
+    <div class="flex items-center gap-2 text-gray-500 font-inter text-sm">
+      <span class="font-medium text-gray-700">{resource.author}</span>
+      <span class="text-gray-300">&bull;</span>
+      <span>{resource.date}</span>
+    </div>
+  </div>
+
+  <!-- Imagen Principal -->
+  <div class="w-full aspect-21/9 bg-gray-100 rounded-3xl overflow-hidden mb-12 border border-gray-100 shadow-sm relative">
+    <SmartImage src={resource.image} alt={resource.title} class="w-full h-full object-cover absolute inset-0" />
+  </div>
+
+  <!-- Contenido Principal -->
+  <!-- Usamos clases utilitarias personalizadas para imitar la tipografía del diseño en lugar de importar un plugin grande como prose -->
+  <article class="max-w-none text-gray-700">
+    <Fragment set:html={resource.contentHtml} />
+  </article>
+</div>

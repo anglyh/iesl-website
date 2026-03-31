@@ -1,0 +1,29 @@
+---
+import BenefitsSlider from "./BenefitsSlider.astro";
+import Section from "../ui/Section.astro";
+import type { BenefitsSection } from "../../types/beneficios.type";
+import IconBubble from "../ui/IconBubble.astro";
+import type { Color } from "../../types/icons";
+
+interface Props {
+  data: BenefitsSection;
+  iconColor?: Color;
+}
+
+const { data, iconColor = "primary" } = Astro.props as Props;
+const { title, icon, description, cards } = data;
+const items = cards.map((card) => ({ title: card.title, image: card.image }));
+---
+
+<Section>
+  <div class="flex items-center gap-6 mb-8">
+    <IconBubble icon={icon} color={iconColor} size={48} />
+
+    <div>
+      <h2 class="font-bold text-gray-900">{title}</h2>
+      <p class="text-gray-600 leading-relaxed text-sm">{description}</p>
+    </div>
+  </div>
+
+  <BenefitsSlider items={items} />
+</Section>

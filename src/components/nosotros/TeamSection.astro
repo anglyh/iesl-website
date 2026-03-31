@@ -1,0 +1,29 @@
+---
+import Section from "../ui/Section.astro";
+import SmartImage from "../ui/SmartImage.astro";
+import { team } from "../../data/nosotros.data";
+---
+
+<Section>
+  <div class="text-center max-w-2xl mx-auto mb-16">
+    <h2 class="font-bold text-gray-900 mb-4 tracking-tight">{team.title}</h2>
+    <p class="text-gray-600 leading-relaxed">{team.description}</p>
+  </div>
+
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    {team.members.map((member) => (
+      <div class="flex flex-col items-center text-center group border-2 border-primary/20 p-4 rounded-3xl hover:border-primary/50 transition-global hover:shadow-lg">
+        <div class="w-24 h-24 rounded-3xl overflow-hidden mb-5 group-hover:border-primary/50 transition-global">
+          <SmartImage
+            src={member.image}
+            alt={member.name}
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <h4 class="font-bold text-gray-900 mb-1.5">{member.name}</h4>
+        <span class="text-primary font-bold text-sm mb-3">{member.role}</span>
+        <p class="text-gray-600 text-sm leading-relaxed">{member.description}</p>
+      </div>
+    ))}
+  </div>
+</Section>

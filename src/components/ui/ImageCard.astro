@@ -1,0 +1,24 @@
+---
+import SmartImage from './SmartImage.astro';
+
+interface Props {
+  title: string;
+  image: any;
+}
+
+const { title, image } = Astro.props;
+---
+
+<div class="bg-gray-200 rounded-4xl flex items-center justify-center text-gray-400 text-sm overflow-hidden relative group aspect-square ">
+  <SmartImage 
+    src={image} 
+    alt={title} 
+    class="w-full h-full object-cover group-hover:scale-110 transition-global" 
+  />
+  <div class="absolute inset-0 bg-black/40 transition-global group-hover:bg-black/50"></div>
+  <span 
+    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-xl lg:text-3xl font-bold text-center px-4 leading-tight z-10 w-full drop-shadow-md"
+  >
+    {title}
+  </span>
+</div>

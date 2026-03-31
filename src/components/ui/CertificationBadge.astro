@@ -1,0 +1,80 @@
+---
+interface Props {
+  level: "professional" | "specialist" | "expert";
+}
+
+const { level } = Astro.props;
+
+const colorMap: Record<string, string> = {
+  professional: "#f3f2e2",
+  specialist: "#70b1ff",
+  expert: "#fcee86",
+};
+
+const color = colorMap[level];
+---
+
+<style>
+  .badge-container {
+    position: relative;
+    width: 280px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    user-select: none;
+  }
+
+  .hexagon-svg {
+    width: 260px;
+    height: 260px;
+    filter: drop-shadow(0px 0px 15px rgba(255, 70, 100, 0.15));
+  }
+
+  .banner {
+    position: absolute;
+    top: 105px;
+    width: 250px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  .banner-text {
+    color: #222222;
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+</style>
+
+<div class="badge-container">
+    
+  <svg class="hexagon-svg" viewBox="0 0 260 280" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="blur-text">
+        <feGaussianBlur stdDeviation="2.5" />
+      </filter>
+    </defs>
+
+    <polygon points="130,15 245,75 245,205 130,265 15,205 15,75" fill="#3c3c3b" stroke={color} stroke-width="3"/>
+
+    <path d="M 119,60 L 117,48 L 124,53 L 130,43 L 136,53 L 143,48 L 141,60 Z" fill={color} />
+
+    <text x="130" y="95" fill="#FFFFFF" font-family="monospace, sans-serif" font-size="22" letter-spacing="2" text-anchor="middle">
+      CERTIFIED
+    </text>
+
+    <g filter="url(#blur-text)" fill="#FFFFFF" font-size="16" font-weight="bold" text-anchor="middle">
+      <text x="130" y="193">Condition Based</text>
+      <text x="130" y="218">Maintenance</text>
+      <text x="130" y="243">(CBM)</text>
+    </g>
+  </svg>
+
+  <div class="banner" style={`background-color: ${color};`}>
+    <span class="banner-text uppercase">{level}</span>
+  </div>
+
+</div>

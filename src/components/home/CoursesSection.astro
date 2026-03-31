@@ -1,0 +1,40 @@
+---
+import Section from "../ui/Section.astro";
+import InfoBadge from "../ui/InfoBadge.astro";
+import CourseCard from "../ui/CourseCard.astro";
+import Button from "../ui/Button.astro";
+import { getFeaturedCourses } from "../../data/courses.data";
+import { ROUTES } from "../../constants/routes";
+
+const featuredCourses = getFeaturedCourses();
+---
+
+<Section class="bg-gray-50/50">
+  <div class="text-center max-w-2xl mx-auto mb-16">
+    <InfoBadge text="Cursos destacados" />
+    <h2 class="font-bold text-gray-900 mb-4 tracking-tight">
+      Empieza por donde quieras
+    </h2>
+    <p class="text-gray-600 font-medium">
+      Cursos prácticos y accesibles para impulsar tu carrera
+    </p>
+  </div>
+  <div class="grid xl:grid-cols-3 lg:grid-cols-2 gap-8 mb-16">
+    {
+      featuredCourses.map((course) => (
+        <CourseCard
+          title={course.title}
+          description={course.description}
+          tag={course.category}
+          details={course.details}
+          rating={course.rating}
+          href={`/cursos/${course.slug}`}
+        />
+      ))
+    }
+  </div>
+
+  <Button href={ROUTES.COURSES} icon="fluent:arrow-right-16-filled" class="mx-auto">
+    Ver todos los cursos
+  </Button>
+</Section>

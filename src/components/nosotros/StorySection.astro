@@ -1,0 +1,38 @@
+---
+import Section from "../ui/Section.astro";
+import InfoBadge from "../ui/InfoBadge.astro";
+import SmartImage from "../ui/SmartImage.astro";
+import { story } from "../../data/nosotros.data";
+---
+
+<Section class="bg-gray-50/50">
+  <div class="grid xl:grid-cols-2 gap-16 items-center">
+    <div>
+      <InfoBadge text={story.badge} />
+      <h2 class="font-bold text-gray-900 mb-6 tracking-tight leading-tight">
+        {story.title.static} <br />
+        <span class="text-primary">{story.title.highlight}</span>
+      </h2>
+      {story.paragraphs.map((p) => (
+        <p class="text-gray-600 mb-6 leading-relaxed font-medium">{p}</p>
+      ))}
+      <p class="text-black font-bold leading-relaxed mt-2">
+        {story.closing}
+      </p>
+    </div>
+
+    <div class="flex justify-center min-h-130 items-center relative w-full h-full mx-auto px-4">
+      <SmartImage
+        alt="IESL en acción"
+        class="absolute left-1/2 top-0 -translate-x-[45%] sm:-translate-x-1/4 w-64 sm:w-80 lg:max-xl:w-70 h-72 sm:h-84 object-cover rounded-3xl z-10"
+        src={story.images[1]}
+      />
+
+      <SmartImage
+        alt="Equipo colaborando"
+        class="absolute right-1/2 -bottom-10 sm:bottom-0 translate-x-[45%] sm:translate-x-1/4 w-64 sm:w-80 lg:max-xl:w-70 h-72 sm:h-84 object-cover rounded-3xl"
+        src={story.images[0]}
+      />
+    </div>
+  </div>
+</Section>

@@ -1,0 +1,31 @@
+---
+import Section from "../ui/Section.astro";
+import Glow from "../ui/Glow.astro";
+import { recursosHero } from "../../data/recursos.data";
+---
+
+<Section class="relative overflow-x-clip py-20 text-center border-b border-gray-100">
+  <Glow 
+    position="top-2/3 left-1/2" 
+    class="-translate-x-1/2 -translate-y-1/2" 
+    color="secondary" 
+    size="w-[600px] h-[600px]" 
+    blur="blur-[200px]" 
+  />
+  
+  <div class="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
+      <div
+        class="inline-flex items-center gap-2 px-5 py-1.5 text-sm rounded-full mb-6 border border-primary bg-white"
+      >
+        {recursosHero.badge}
+      </div>
+    
+    <h1 class="font-bold text-gray-900 text-4xl md:text-5xl lg:text-5xl mt-2 mb-6 tracking-tight leading-tight max-w-2xl">
+      {recursosHero.title.static}
+    </h1>
+    
+    <p class="text-gray-600 font-inter text-lg max-w-xl mx-auto">
+      {recursosHero.description}
+    </p>
+  </div>
+</Section>

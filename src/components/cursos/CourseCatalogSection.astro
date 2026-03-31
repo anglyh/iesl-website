@@ -1,0 +1,151 @@
+---
+import Section from "../ui/Section.astro";
+import CourseCard from "../ui/CourseCard.astro";
+import { courses, getCategories } from "../../data/courses.data";
+import Button from "../ui/Button.astro";
+
+const categories = getCategories();
+const INITIAL_VISIBLE = 9;
+---
+
+<Section id="catalogo">
+  <!-- Encabezado + controles -->
+  <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between mb-10">
+    <h2 class="font-bold text-gray-900 tracking-tight">Explora nuestros cursos:</h2>
+
+    <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+      <!-- Barra de búsqueda -->
+      <input
+        id="course-search"
+        type="search"
+        placeholder="Buscar curso..."
+        class="px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-gray-50 font-inter text-sm w-full sm:w-64"
+      />
+
+      <!-- Dropdown de categorías -->
+      <select
+        id="course-category"
+        class="px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-gray-50 font-inter text-sm appearance-none w-full sm:w-auto cursor-pointer hover:border-primary/50"
+      >
+        <option value="">Todas las categorías</option>
+        {categories.map((cat) => <option value={cat}>{cat}</option>)}
+      </select>
+    </div>
+  </div>
+
+  <!-- Grid de cursos -->
+  <!-- Todos los cursos están en el HTML (SEO) pero el JS controla la visibilidad -->
+  <div id="courses-grid" class="grid xl:grid-cols-3 lg:grid-cols-2 gap-8 mb-10">
+    {
+      courses.map((course, index) => (
+        <div
+          data-course
+          data-category={course.category}
+          data-title={course.title.toLowerCase()}
+          data-description={course.description.toLowerCase()}
+          class={index >= INITIAL_VISIBLE ? "hidden" : ""}
+        >
+          <CourseCard
+            title={course.title}
+            description={course.description}
+            tag={course.category}
+            details={course.details}
+            rating={course.rating}
+            href={`/cursos/${course.slug}`}
+            image={course.image}
+          />
+        </div>
+      ))
+    }
+  </div>
+
+  <!-- Mensaje sin resultados -->
+  <p id="no-results" class="hidden text-center text-gray-500 py-16 font-inter">
+    No se encontraron cursos para tu búsqueda.
+  </p>
+
+  <!-- Botón "Ver más" -->
+  <Button type="button" class="m-auto" id="load-more">
+  Ver más cursos
+</Button>
+ 
+</Section>
+<script>
+  // 1. Seleccionamos todos los elementos del DOM que vamos a manipular
+  const $searchInput = document.querySelector("#course-search") as HTMLInputElement;
+  const $categorySelect = document.querySelector("#course-category") as HTMLSelectElement;
+  const $courses = document.querySelectorAll("[data-course]") as NodeListOf<HTMLElement>;
+  const $noResultsMsg = document.querySelector("#no-results") as HTMLElement;
+  const $loadMoreBtn = document.querySelector("#load-more") as HTMLElement;
+
+  // 2. Definimos el estado inicial
+  const INITIAL_VISIBLE = 9;
+  let currentLimit = INITIAL_VISIBLE;
+
+  // 3. Función central: Evalúa qué cursos deben verse según los filtros y el límite actual
+  function filterAndRenderCourses() {
+    const searchTerm = $searchInput.value.toLowerCase().trim();
+    const selectedCategory = $categorySelect.value;
+    let matchCount = 0; // Contador de cuántos cursos coinciden con los filtros
+
+    $courses.forEach(($course) => {
+      // Extraemos los datos que guardaste en los atributos data-*
+      const title = $course.dataset.title || "";
+      const desc = $course.dataset.description || "";
+      const category = $course.dataset.category || "";
+
+      // Evaluamos si el curso pasa los filtros
+      const matchesSearch = title.includes(searchTerm) || desc.includes(searchTerm);
+      const matchesCategory = selectedCategory === "" || category === selectedCategory;
+
+      if (matchesSearch && matchesCategory) {
+        // Es un match. Ahora evaluamos si debe mostrarse según el botón "Ver más"
+        if (matchCount < currentLimit) {
+          $course.classList.remove("hidden");
+        } else {
+          $course.classList.add("hidden");
+        }
+        matchCount++; // Sumamos al contador de coincidencias
+      } else {
+        // No cumple los filtros, lo ocultamos
+        $course.classList.add("hidden");
+      }
+    });
+
+    // 4. Lógica de UI: Mensaje de "Sin resultados"
+    if (matchCount === 0) {
+      $noResultsMsg.classList.remove("hidden");
+    } else {
+      $noResultsMsg.classList.add("hidden");
+    }
+
+    // 5. Lógica de UI: Mostrar u ocultar el botón "Ver más cursos"
+    // Si hay más coincidencias que el límite actual, mostramos el botón
+    if (matchCount > currentLimit) {
+      $loadMoreBtn.classList.remove("hidden");
+      // Opcional: Si usamos flex/grid en el botón, classList.remove("hidden") está perfecto para Tailwind
+    } else {
+      $loadMoreBtn.classList.add("hidden");
+    }
+  }
+
+  // 6. Asignamos los Event Listeners
+  // Evento para el buscador de texto
+  $searchInput?.addEventListener('input', () => {
+    currentLimit = INITIAL_VISIBLE; // Reiniciamos la paginación a 9 si el usuario busca algo nuevo
+    filterAndRenderCourses();
+  });
+
+  // Evento para el selector de categorías
+  $categorySelect?.addEventListener('change', () => {
+    currentLimit = INITIAL_VISIBLE; // Reiniciamos la paginación a 9 si cambia la categoría
+    filterAndRenderCourses();
+  });
+
+  // Evento para el botón de "Ver más cursos"
+  $loadMoreBtn?.addEventListener('click', () => {
+    currentLimit += INITIAL_VISIBLE; // Aumentamos el límite de 9 en 9 (9, 18, 27...)
+    filterAndRenderCourses();
+  });
+
+</script>

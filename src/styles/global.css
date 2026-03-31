@@ -3,4 +3,76 @@
 @theme inline {
   --font-poppins: var(--font-poppins);
   --font-inter: var(--font-inter);
+  --color-primary: #2AB3BA;
+  --color-secondary: #d62942;
+  --color-footer-bg: #151D2A;
+  --color-footer-border: #1D2939;
+}
+
+@layer base {
+  html {
+    font-size: 18px;
+  }
+
+  body {
+    font-family: var(--font-inter);
+    min-height: 100dvh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-poppins);
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 3.2rem);
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 2.6rem);
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 3vw, 1.8rem);
+  }
+
+  h4 {
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+  }
+
+  h5 {
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+  }
+
+  p {
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+  }
+
+  /* Base transitions */
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    transition: all 300ms ease;
+  }
+}
+
+@layer utilities {
+  .transition-global {
+    transition: all 300ms ease;
+  }
+  .border-primary {
+    border-color: var(--color-primary);
+  }
+}
+
+@layer components {
+  .card-base {
+    @apply bg-white p-6 rounded-2xl border-2 border-primary/20 hover:shadow hover:border-primary/50;
+  }
 }

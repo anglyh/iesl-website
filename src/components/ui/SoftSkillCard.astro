@@ -1,0 +1,47 @@
+---
+import type { IconName } from "../../types/icons";
+import IconBubble from "./IconBubble.astro";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  icon: IconName;
+  tag: string;
+  title: string;
+  description: string;
+  skills: string[];
+}
+
+const { icon, tag, title, description, skills } = Astro.props;
+---
+
+<div
+  class="card-base transition-global"
+>
+  <div class="mb-6">
+    <IconBubble icon={icon} color="primary"/>
+  </div>
+  
+  <span class="inline-flex items-center justify-center border border-primary text-primary font-medium text-sm px-3 py-1 rounded-full mb-6 w-fit bg-primary/10">
+    {tag}
+  </span>
+
+  <h4 class="font-bold text-gray-900 text-3xl mb-4 leading-tight tracking-tight">
+    {title}
+  </h4>
+  
+  <p class="text-gray-600 leading-relaxed mb-8">
+    {description}
+  </p>
+  
+  <div class="mt-auto">
+    <hr class="border-gray-200 mb-8" />
+    <ul class="space-y-4">
+      {skills.map((skill) => (
+        <li class="flex items-start gap-3">
+          <Icon name="mdi:check-circle-outline" class="w-6 h-6 text-primary shrink-0 mt-0.5" />
+          <span class="text-gray-700 text-base leading-relaxed">{skill}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>

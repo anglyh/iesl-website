@@ -1,0 +1,32 @@
+---
+import { Icon } from "astro-icon/components";
+import type { Color } from "../../types/icons";
+
+interface Props {
+  icon: string;
+  color: Color;
+  size?: number;
+  class?: string;
+}
+
+const { icon, color, size = 30, class: className } = Astro.props;
+
+const colorMap: Record<Color, { bg: string; text: string }> = {
+  primary: { bg: "bg-primary/10", text: "text-primary" }, 
+  purple: { bg: "bg-purple-50", text: "text-purple-600" },
+  orange: { bg: "bg-orange-50", text: "text-orange-600" },
+  red: { bg: "bg-red-50", text: "text-red-600" },
+};
+
+const styles = colorMap[color] || colorMap.primary;
+---
+
+<div
+  class:list={[
+    "w-max h-max p-3 rounded-full flex items-center justify-center",
+    styles.bg,
+    className,
+  ]}
+>
+  <Icon name={icon} size={size} class:list={["text-2xl", styles.text]} />
+</div>

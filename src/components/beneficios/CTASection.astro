@@ -1,0 +1,23 @@
+---
+import Section from "../ui/Section.astro";
+import { ctaSection } from "../../data/beneficios.data";
+import Button from "../ui/Button.astro";
+import Glow from "../ui/Glow.astro";
+---
+
+<Section class="relative">
+  <Glow
+    color="primary"
+    size="w-[70vw] h-[400px]"
+    position="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+  />
+  <div class="py-12 text-center flex flex-col gap-6 items-center">
+    <h2 class="font-bold text-gray-900">{ctaSection.title}</h2>
+    <p class="text-gray-600 leading-relaxed mb-4">
+      {ctaSection.description}
+    </p>
+    <Button href={ctaSection.cta.href} variant="secondary">
+      {ctaSection.cta.text}
+    </Button>
+  </div>
+</Section>

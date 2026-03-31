@@ -1,0 +1,60 @@
+---
+import type { Course } from "../../../types/course.type";
+import SmartImage from "../../ui/SmartImage.astro";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  course: Course;
+}
+
+const { course } = Astro.props;
+---
+
+<div>
+  <!-- Migas de pan y badge -->
+  <div class="mb-4">
+    <span class="inline-block px-4 py-1 border border-gray-300 text-gray-500 hover:border-gray-400 font-bold rounded-full text-sm font-inter transition-global cursor-default bg-white">
+      {course.category}
+    </span>
+  </div>
+
+  <!-- Título y Descripción -->
+  <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold font-poppins text-gray-900 mb-6 leading-tight tracking-tight text-balance">
+    Cursos de <span class="text-primary">{course.title.replace('Curso de ', '').replace('Cursos de ', '')}</span>
+  </h1>
+  <p class="text-gray-600 text-lg mb-8 leading-relaxed max-w-2xl font-medium">
+    {course.description}
+  </p>
+
+  <!-- Metadatos (Rating, horas, clases, nivel) -->
+  <div class="flex flex-wrap items-center gap-4 md:gap-6 text-sm md:text-base font-inter text-gray-500 mb-10">
+    <div class="flex items-center gap-1.5 font-bold text-gray-600">
+      <Icon name="material-symbols:star" class="text-xl md:text-2xl text-orange-400" />
+      {course.rating} <span class="font-normal text-gray-400 ml-1">({course.reviews} estudiantes)</span>
+    </div>
+    
+    <div class="flex items-center gap-2">
+      <Icon name="mdi:clock-outline" class="text-xl opacity-70" />
+      <span>{course.details.totalHours}</span>
+    </div>
+    
+    <div class="flex items-center gap-2">
+      <Icon name="tabler:book" class="text-xl opacity-70" />
+      <span>{course.details.totalLessons}</span>
+    </div>
+    
+    <div class="flex items-center gap-2">
+      <Icon name="material-symbols:signal-cellular-alt-rounded" class="text-xl opacity-70" />
+      <span>{course.details.level}</span>
+    </div>
+  </div>
+
+  <!-- Portada / Video placeholder -->
+  <div class="w-full aspect-video rounded-3xl overflow-hidden shadow-lg border border-gray-100 relative group bg-gray-900">
+    <SmartImage
+      src={course.image}
+      alt={course.title}
+      class="w-full h-full object-cover"
+    />
+  </div>
+</div>

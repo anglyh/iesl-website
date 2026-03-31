@@ -1,0 +1,56 @@
+---
+import Section from "../ui/Section.astro";
+import Button from "../ui/Button.astro";
+import Glow from "../ui/Glow.astro";
+import { Icon } from "astro-icon/components";
+import { hero } from "../../data/cursos.data";
+---
+
+<Section class="relative">
+  <Glow 
+    position="top-1/2 right-1/2" 
+    size="w-[40vw] h-[400px]" 
+    class="translate-x-1/2 -translate-y-1/2" 
+  />
+
+  <div class="max-w-3xl mx-auto text-center">
+    <!-- Badge -->
+    <div class="inline-flex bg-white items-center gap-2 px-5 py-1.5 text-sm rounded-full mb-6 border border-primary">
+      {hero.badge}
+    </div>
+
+    <!-- Título -->
+    <h1 class="leading-tight font-bold text-gray-900 mb-6 tracking-tight">
+      {hero.title.static}<br />
+      <span class="text-primary">{hero.title.highlight}</span>
+    </h1>
+
+    <!-- Descripción -->
+    <p class="text-gray-600 mb-10 leading-relaxed max-w-xl mx-auto">
+      {hero.description}
+    </p>
+
+    <!-- Social Proof -->
+    <div class="flex flex-wrap items-center justify-center gap-6 text-gray-600">
+      <!-- Estudiantes -->
+      <div class="flex items-center gap-2">
+        <div class="flex -space-x-2">
+          {[1, 2, 3, 4].map(() => (
+            <div class="w-8 h-8 rounded-full bg-primary/20 border-2 border-white flex items-center justify-center">
+              <Icon name="mdi:account" class="text-primary text-base" />
+            </div>
+          ))}
+        </div>
+        <span class="font-semibold text-gray-700">{hero.socialProof.students.value}</span>
+      </div>
+
+      <div class="w-px h-5 bg-gray-200 hidden sm:block" />
+
+      <!-- Certificado -->
+      <div class="flex items-center gap-2">
+        <Icon name="material-symbols:verified-rounded" class="text-primary text-2xl" />
+        <span class="font-semibold text-gray-700">{hero.socialProof.certificate.value}</span>
+      </div>
+    </div>
+  </div>
+</Section>

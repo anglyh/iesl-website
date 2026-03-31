@@ -1,0 +1,52 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { IconName } from '../../types/icons';
+
+interface Props {
+  href?: string;
+  variant?: "primary" | "secondary" | "outline";
+  id?: string;
+  class?: string;
+  icon?: IconName;
+  iconColor?: string;
+  type?: "button" | "submit" | "anchor";
+}
+
+const {
+  href,
+  variant = "primary",
+  id,
+  class: className = "",
+  icon,
+  iconColor,
+  type = "anchor"
+} = Astro.props;
+
+const Tag = type === "anchor" ? "a" : "button";
+
+const baseStyles = "flex items-center justify-center gap-2 font-bold px-6 sm:px-8 py-3 sm:py-3.5 rounded-full text-center transition-global shadow-primary/20 border-2 border-primary/20 w-fit cursor-pointer";
+
+const variantMap: Record<NonNullable<Props["variant"]>, string> = {
+  primary: "bg-primary text-white border-transparent hover:bg-primary/90",
+  secondary: "bg-white text-primary border-primary hover:bg-gray-50",
+  outline: "bg-outline text-white",
+};
+
+if (type === "anchor" && !href) {
+  throw new Error("href es requerido cuando type='anchor'");
+}
+---
+
+<Tag
+  {...(type === "anchor" ? { href } : {})}
+  {...(type !== "anchor" ? { type } : {})}
+  {...(id ? { id } : {})}
+  class:list={[
+    baseStyles,
+    variantMap[variant],
+    className,
+  ]}
+>
+  <slot />
+  {icon && <Icon name={icon} size={24} class={iconColor} />}
+</Tag>

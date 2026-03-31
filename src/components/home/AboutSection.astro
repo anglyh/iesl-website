@@ -1,0 +1,40 @@
+---
+import Section from "../ui/Section.astro";
+import InfoBadge from "../ui/InfoBadge.astro";
+import BenefitCard from "../ui/BenefitCard.astro";
+import { about } from "../../data/inicio.data";
+
+---
+
+<Section>
+  <div class="grid xl:grid-cols-2 gap-16 items-center">
+    <div>
+      <InfoBadge text={about.badge} />
+      <h2 class="font-bold text-gray-900 mb-6 tracking-tight leading-tight">
+        {about.title}
+      </h2>
+      {about.paragraphs.map((p) => (
+        <p class={p.class + " text-gray-600 mb-8 leading-relaxed font-medium"}>
+          {p.segments.map((s) => (
+            <span class={s.highlight ? "font-bold text-black" : ""}>
+              {s.text}
+            </span>
+          ))}
+        </p>
+      ))}
+      <p class="text-black font-bold leading-relaxed">
+        {about.closing}
+      </p>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-8">
+      {about.features.map((ft) => (
+        <BenefitCard
+          icon={ft.icon}
+          title={ft.title}
+          description={ft.description}
+          color={ft.color}
+        />
+      ))}
+    </div>
+  </div>
+</Section>

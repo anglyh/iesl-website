@@ -1,0 +1,94 @@
+---
+import ImageCard from '../ui/ImageCard.astro';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+interface Props {
+  items: { title: string; image?: any }[];
+}
+
+const { items } = Astro.props;
+---
+<div class="swiper benefits-swiper w-full">
+  <div class="swiper-wrapper">
+    {items.map((item) => (
+      <div class="swiper-slide h-auto">
+        <ImageCard 
+          title={item.title} 
+          image={item.image} 
+        />
+      </div>
+    ))}
+  </div>
+  
+  <!-- Controles opcionales (Paginación y Flechas) -->
+  <div class="swiper-pagination mt-4 relative"></div>
+  <div class="swiper-button-prev hidden md:flex text-primary! select-none"></div>
+  <div class="swiper-button-next hidden md:flex text-primary! select-none"></div>
+</div>
+
+<script>
+  // 3. Importas el JS en la etiqueta script para que Astro lo procese en el cliente
+  import Swiper from 'swiper';
+  import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+
+  // 4. Creamos una función de inicio para asegurarnos que soporte 
+  // View Transitions si las usas, o carga normal
+  const initSwiper = () => {
+    const swipers = document.querySelectorAll('.benefits-swiper');
+    
+    swipers.forEach((swiperElement) => {
+      new Swiper(swiperElement as HTMLElement, {
+        modules: [Navigation, Pagination, Autoplay],
+        loop: true,
+        slidesPerView: 1, // Por defecto mobile
+        spaceBetween: 20,
+        autoplay: {
+          delay: 3500,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        // Diseño Responsive
+        breakpoints: {
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 24,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 32,
+          },
+        }
+      });
+    });
+  };
+
+  // Ejecutamos inmediatamente: Astro inyecta <script> como type="module" (deferred)
+  // lo cual garantiza que el DOM ya existe en este punto.
+  initSwiper();
+
+  // Solo re-ejecutamos si hay navegación con ViewTransitions de Astro
+  document.addEventListener('astro:after-swap', initSwiper);
+  document.addEventListener('astro:page-load', initSwiper);
+</script>
+
+<style>
+  /* Opcional: Ajustes menores a los controles */
+  .swiper {
+    padding-bottom: 3rem !important; /* Espacio para que no se superpongan los puntos */
+  }
+  .swiper-pagination {
+    bottom: 0 !important;
+  }
+  .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: var(--color-primary) !important;
+  }
+</style>

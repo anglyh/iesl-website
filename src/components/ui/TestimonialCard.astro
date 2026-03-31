@@ -1,0 +1,47 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  quote: string;
+  name: string;
+  role: string;
+  highlight?: string;
+  avatar?: string;
+}
+
+const { quote, name, role, highlight, avatar } = Astro.props;
+---
+
+<figure class="bg-primary/2 border-2 border-primary/10 hover:border-primary/60 transition-global rounded-3xl p-4 lg:p-6 flex flex-col h-full hover:shadow-lg">
+  
+  <div class="text-primary mb-6">
+    <Icon name="lineicons:double-quotes-end-1" size={52} />
+  </div>
+
+  <blockquote class="text-gray-600 leading-relaxed mb-6">
+    <p>"{quote}"</p>
+  </blockquote>
+  
+  {highlight && (
+    <div class="bg-primary/10 text-primary font-bold px-5 py-1 rounded-full w-fit mb-6 text-sm">
+      {highlight}
+    </div>
+  )}
+
+  <figcaption class="mt-auto">
+    <hr class="border-gray-200 mb-6" />
+
+    <div class="flex items-center gap-4">
+      {avatar ? (
+        <img src={avatar} alt={`Foto de ${name}`} class="w-16 h-16 rounded-full object-cover shrink-0" />
+      ) : (
+        <div class="w-16 h-16 rounded-full bg-gray-200 shrink-0"></div>
+      )}
+      
+      <div>
+        <p class="font-bold text-gray-900">{name}</p>
+        <p class="text-gray-500">{role}</p>
+      </div>
+    </div>
+  </figcaption>
+</figure>

@@ -1,0 +1,28 @@
+---
+import Section from "../ui/Section.astro";
+import StepCard from "../ui/StepCard.astro";
+import { access } from "../../data/comunidad.data";
+import Button from "../ui/Button.astro";
+---
+
+<Section>
+  <div class="text-center max-w-2xl mx-auto mb-16">
+    <h2 class="font-bold text-gray-900 tracking-tight leading-tight">
+      {access.title}
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-1 xl:grid-cols-3 gap-10 lg:gap-12 mb-16 max-w-6xl mx-auto">
+    {access.steps.map((step) => (
+      <StepCard
+        step={step.step}
+        title={step.title}
+        description={step.description}
+      />
+    ))}
+  </div>
+
+  <Button href={access.cta.href} icon="fluent:arrow-right-16-filled" variant="secondary" class="m-auto">
+    {access.cta.text}
+  </Button>
+</Section>

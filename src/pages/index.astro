@@ -1,15 +1,28 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-import "../styles/global.css";
-
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import HeroSection from "../components/home/HeroSection.astro";
+import AboutSection from "../components/home/AboutSection.astro";
+import CoursesSection from "../components/home/CoursesSection.astro";
+import CommunitySection from "../components/home/CommunitySection.astro";
+import WellnessSection from "../components/home/WellnessSection.astro";
+import CertificationsSection from "../components/shared/CertificationsSection.astro";
+import TestimonialsSection from "../components/shared/TestimonialsSection.astro";
+import { testimonials } from "../data/inicio.data";
+import FaqSection from "../components/home/FaqSection.astro";
+import ContactSection from "../components/home/ContactSection.astro"; 
 ---
 
-<Layout>
-	<Welcome />
-	<h1 class="font-poppins text-3xl font-bold underline">Hello world!</h1>
-	<h2 class="font-inter text-3xl font-bold underline">Hello world!</h2>
+<Layout 
+  title="Inicio" 
+  description="IESL Institute - Crecimiento profesional con enfoque humano. Estudia, crece y conecta con nuestra comunidad y beneficios pensados para vos."
+>
+  <HeroSection />
+  <AboutSection />
+  <CoursesSection />
+  <CommunitySection />
+  <WellnessSection />
+  <CertificationsSection />
+  <TestimonialsSection testimonials={testimonials} />
+  <FaqSection />
+  <ContactSection />
 </Layout>
