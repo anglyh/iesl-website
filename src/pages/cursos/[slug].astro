@@ -11,6 +11,7 @@ import TestimonialsSection from "../../components/shared/TestimonialsSection.ast
 import CertificationsSection from "../../components/shared/CertificationsSection.astro";
 import ContactSection from "../../components/cursos/ContactSection.astro";
 import SmartImage from "../../components/ui/SmartImage.astro";
+import certificateImg from "../../assets/images/cursos/certificado.webp";
 
 export async function getStaticPaths() {
   return courses.map((course) => ({
@@ -57,19 +58,13 @@ const { course } = Astro.props;
       <h2 class="font-bold text-gray-900 text-3xl tracking-tight mb-8">
         Certificado de finalización
       </h2>
-      <div class="w-full bg-gray-50 rounded-3xl p-4 border border-gray-100 flex items-center justify-center relative overflow-hidden group">
-        <!-- Placeholder de la imagen del certificado -->
+      <div class="w-full rounded-3xl flex items-center justify-center">
         <SmartImage
-          src="/images/placeholder.webp"
+          src={certificateImg}
           alt="Certificado de IESL Institute"
-          class="w-full h-auto object-cover rounded-2xl shadow-sm group-hover:scale-[1.02] transition-global"
+          class="w-full h-auto object-cover shadow-sm select-none"
           loading="lazy"
         />
-        <!-- Etiqueta decorativa sobrepuesta -->
-        <!-- <div class="absolute bottom-6 right-6 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-xl border border-gray-100 shadow-sm flex items-center gap-2">
-           <Icon name="material-symbols:verified-rounded" class="text-primary text-2xl" />
-           <span class="font-bold text-gray-800 text-sm font-poppins">Validez Oficial</span>
-        </div> -->
       </div>
     </div>
   </Section>
