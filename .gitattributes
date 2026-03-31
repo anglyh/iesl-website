@@ -1,0 +1,2 @@
+# Prevenir advertencias de LF/CRLF estandarizando los saltos de línea a LF (estilo Linux/Mac) en todos los sistemas operativos, incluyendo Windows.
+* text=auto eol=lf
