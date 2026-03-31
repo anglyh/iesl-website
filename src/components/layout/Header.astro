@@ -13,10 +13,10 @@ const isActive = (path: string) => {
 };
 ---
 
-<Section as="header" class="py-4! border-b border-gray-100 bg-white shadow-sm sticky top-0 z-50">
+<Section as="header" class="py-2! md:py-4! border-b border-gray-100 bg-white shadow-sm sticky top-0 z-50">
   <div class="flex justify-between items-center">
     <a href={ROUTES.HOME} class="flex items-center gap-2">
-      <SmartImage src={logo} alt="Logo" class="w-32 h-auto" loading="eager" />
+      <SmartImage src={logo} alt="Logo" class="w-24 md:w-32 h-auto" loading="eager" />
     </a>
     <nav
       class="hidden md:flex gap-8 text-sm font-semibold text-gray-900 font-inter tracking-wide"
