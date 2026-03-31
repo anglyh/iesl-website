@@ -32,6 +32,7 @@ export type IconName =
   | "ph:user-rectangle" 
   | "ph:user-check-bold"
   | "ph:gift"
+  | "ph:certificate"
   | "mdi:menu"
   | "mdi:close"
   | "mdi:whatsapp"
