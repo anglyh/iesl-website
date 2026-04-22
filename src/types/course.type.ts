@@ -2,7 +2,7 @@ import type { TestimonialCard } from "./shared.type";
 
 export type CourseLevel = "Nivel inicial" | "Nivel intermedio" | "Nivel avanzado";
 
-export type CourseCategory = "Tecnología" | "Marketing" | "Idiomas" | "Diseño" | "Data" | "Productividad" | "Negocios" | "Habilidades blandas" | "Finanzas" | "Creatividad";
+export type CourseCategory = "Tecnología" | "Marketing" | "Idiomas" | "Diseño" | "Data" | "Productividad" | "Negocios" | "Habilidades blandas" | "Finanzas" | "Creatividad" | "Recursos Humanos" | "Mantenimiento";
 
 export type CourseModule = {
   title: string;
